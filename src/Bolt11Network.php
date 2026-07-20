@@ -9,7 +9,7 @@ enum Bolt11Network: string
     case Mainnet = 'bc';
     case Testnet = 'tb';
     case Regtest = 'bcrt';
-    case Signet  = 'sb';
+    case Signet  = 'tbs';
 
     public function isMainnet(): bool
     {

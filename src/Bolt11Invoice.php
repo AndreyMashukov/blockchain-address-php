@@ -119,7 +119,7 @@ final readonly class Bolt11Invoice implements ChainAddressInterface
      */
     private static function splitHrp(string $body, string $raw): array
     {
-        foreach ([Bolt11Network::Regtest, Bolt11Network::Testnet, Bolt11Network::Mainnet, Bolt11Network::Signet] as $candidate) {
+        foreach ([Bolt11Network::Regtest, Bolt11Network::Signet, Bolt11Network::Testnet, Bolt11Network::Mainnet] as $candidate) {
             if (str_starts_with($body, $candidate->value)) {
                 return [$candidate, substr($body, \strlen($candidate->value))];
             }

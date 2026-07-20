@@ -8,6 +8,8 @@ use InvalidArgumentException;
 
 final class Bech32
 {
+    private const int MAX_INT_WORDS = 12;
+
     public const string CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
 
     private const int CHECKSUM_LENGTH = 6;
@@ -33,6 +35,14 @@ final class Bech32
 
         $hrp     = substr($lower, 0, $separator);
         $dataRaw = substr($lower, $separator + 1);
+
+        foreach (str_split($hrp) as $character) {
+            $code = \ord($character);
+
+            if ($code < 33 || $code > 126) {
+                throw new InvalidArgumentException(sprintf('Bech32: human-readable part of "%s" holds a character outside the printable range BIP-173 allows.', $encoded));
+            }
+        }
 
         if (\strlen($dataRaw) < self::CHECKSUM_LENGTH) {
             throw new InvalidArgumentException(sprintf('Bech32: data part shorter than the checksum in "%s".', $encoded));
@@ -72,6 +82,10 @@ final class Bech32
      */
     public static function wordsToInt(array $words): int
     {
+        if (\count($words) > self::MAX_INT_WORDS) {
+            throw new InvalidArgumentException(sprintf('Bech32: %d words cannot be read as an integer without overflowing.', \count($words)));
+        }
+
         $value = 0;
 
         foreach ($words as $word) {

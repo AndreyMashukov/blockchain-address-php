@@ -102,6 +102,28 @@ final class Bolt11InvoiceTest extends TestCase
         Bolt11Invoice::fromString($corrupted);
     }
 
+    public function testASignetInvoiceIsRecognisedRatherThanReadAsTestnet(): void
+    {
+        self::assertStringStartsWith(
+            Bolt11Network::Testnet->value,
+            Bolt11Network::Signet->value,
+            'signet HRP extends the testnet one, which is why it has to be matched before it',
+        );
+        self::assertFalse(Bolt11Network::Signet->isMainnet());
+    }
+
+    public function testTheHumanReadablePartMustHoldOnlyPrintableCharacters(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        Bech32::decode("ln\x01bc1qqqqqq");
+    }
+
+    public function testAnIntegerFieldWiderThanAnIntIsRefusedRatherThanOverflowing(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        Bech32::wordsToInt(array_fill(0, 13, 31));
+    }
+
     #[DataProvider('nonInvoices')]
     public function testRejectsAnythingThatIsNotALightningInvoice(string $raw): void
     {
