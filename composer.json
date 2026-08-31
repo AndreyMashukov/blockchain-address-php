@@ -1,6 +1,6 @@
 {
     "name": "amashukov/blockchain-address-php",
-    "description": "Typed on-chain address value objects for EVM, TON and Lightning — ChainAddressInterface, TonAddress, EvmAddress, Erc20Address, JettonAddress, Bolt11Invoice with structural eq() comparison.",
+    "description": "Typed on-chain address value objects for EVM and TON with structural equality.",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/AndreyMashukov/blockchain-address-php",
@@ -12,8 +12,6 @@
         "ethereum",
         "ton",
         "the-open-network",
-        "lightning",
-        "bolt11",
         "erc20",
         "jetton",
         "php"
@@ -31,9 +29,7 @@
     ],
     "require": {
         "php": ">=8.3",
-        "ext-bcmath": "*",
-        "amashukov/ton-wallet-php": "^0.1.0",
-        "psr/clock": "^1.0"
+        "amashukov/ton-wallet-php": "^0.1.0"
     },
     "require-dev": {
         "amashukov/rector-php-rules": "^0.4",
