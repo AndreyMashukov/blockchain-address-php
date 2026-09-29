@@ -24,6 +24,16 @@ enum BitcoinNetwork: string
         };
     }
 
+    public function p2pkhVersion(): int
+    {
+        return self::Mainnet === $this ? 0x00 : 0x6F;
+    }
+
+    public function p2shVersion(): int
+    {
+        return self::Mainnet === $this ? 0x05 : 0xC4;
+    }
+
     public function hrp(): string
     {
         return match ($this) {

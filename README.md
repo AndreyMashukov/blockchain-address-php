@@ -17,7 +17,7 @@ An **address Value Object layer for multi-chain PHP applications**. Every addres
 - **Parse-at-the-boundary** — `fromString()` throws on anything malformed, `tryFromString()` returns `null`. A constructed instance is always a valid address.
 - **Structural `eq()`** — comparison is by identity, not spelling. A TON address is equal to itself across bounceable / non-bounceable / url-safe forms; an EVM address is equal across EIP-55 checksum casing. `strtolower($a) === strtolower($b)` is wrong on TON and this exists to stop you writing it.
 - **Cross-chain safe** — `eq()` between two different chain types is `false`, never a coincidental match.
-- **Bitcoin SegWit addresses** — `BitcoinAddress::fromString($raw, BitcoinNetwork::Mainnet)` decodes bech32 / bech32m (BIP-173, BIP-350), verifies the checksum variant against the witness version, the witness program length and the network prefix (`bc`, `tb`, `bcrt`). A testnet or regtest address never parses as mainnet. Legacy base58 addresses are out of scope.
+- **Every Bitcoin address format** — `BitcoinAddress::fromString($raw, BitcoinNetwork::Mainnet)` accepts legacy base58check P2PKH (`1…`, `m…`/`n…`) and P2SH (`3…`, `2…`) with their double-SHA-256 checksum, and SegWit bech32 / bech32m (BIP-173, BIP-350: P2WPKH, P2WSH, P2TR and future witness versions) with the checksum variant checked against the witness version and the witness program length. The network is part of the check — version byte for base58, prefix (`bc`, `tb`, `bcrt`) for SegWit — so an address from another network never parses. `type()` reports which format it is.
 - **Composite addresses** — `Erc20Address` (contract + token) and `JettonAddress` (contract + master + wallet) carry the several identifiers those standards actually need, instead of passing three loose strings alongside each other.
 
 ## Why amashukov/blockchain-address-php
@@ -46,7 +46,9 @@ use Amashukov\BlockchainAddress\BitcoinAddress;
 use Amashukov\BlockchainAddress\BitcoinNetwork;
 
 $btc = BitcoinAddress::fromString('BC1QW508D6QEJXTDG4Y5R3ZARVARY0C5XW7KV8F3T4', BitcoinNetwork::fromName('mainnet'));
+$btc->type();                                                                    // BitcoinAddressType::P2wpkh
 $btc->witnessVersion();                                                          // 0
+BitcoinAddress::fromString('3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy', BitcoinNetwork::Mainnet)->type(); // BitcoinAddressType::P2sh
 $btc->toString();                                                                // 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4'
 BitcoinAddress::tryFromString((string) $btc, BitcoinNetwork::Testnet);           // null — wrong network
 

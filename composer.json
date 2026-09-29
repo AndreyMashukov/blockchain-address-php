@@ -17,6 +17,7 @@
         "bitcoin",
         "bech32",
         "segwit",
+        "base58",
         "php"
     ],
     "support": {
