@@ -42,7 +42,40 @@ final class BitcoinAddressTest extends TestCase
         yield 'regtest P2SH' => ['2MsFFCK16VhsCcvPXruztdzzcTZEQCbNKjJ', BitcoinNetwork::Regtest, BitcoinAddressType::P2sh, null, '000102030405060708090a0b0c0d0e0f10111213', '2MsFFCK16VhsCcvPXruztdzzcTZEQCbNKjJ'];
     }
 
+    /**
+     * @return iterable<string, array{string, BitcoinNetwork, BitcoinAddressType, ?int, string, string}>
+     */
+    public static function wellKnownMainnetAddresses(): iterable
+    {
+        yield 'early P2PKH, recipient of the first peer-to-peer transfer' => ['12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S', BitcoinNetwork::Mainnet, BitcoinAddressType::P2pkh, null, '11b366edfc0a8b66feebae5c2e25a7b6a5d1cf31', '12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S'];
+        yield 'vanity burn P2PKH' => ['1BitcoinEaterAddressDontSendf59kuE', BitcoinNetwork::Mainnet, BitcoinAddressType::P2pkh, null, '759d6677091e973b9e9d99f19c68fbf43e3f05f9', '1BitcoinEaterAddressDontSendf59kuE'];
+        yield 'proof-of-burn P2PKH' => ['1CounterpartyXXXXXXXXXXXXXXXUWLpVr', BitcoinNetwork::Mainnet, BitcoinAddressType::P2pkh, null, '818895f3dc2c178629d3d2d8fa3ec4a3f8179821', '1CounterpartyXXXXXXXXXXXXXXXUWLpVr'];
+        yield 'exchange cold wallet P2SH' => ['34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo', BitcoinNetwork::Mainnet, BitcoinAddressType::P2sh, null, '23e522dfc6656a8fda3d47b4fa53f7585ac758cd', '34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo'];
+        yield 'multisig P2SH' => ['3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5', BitcoinNetwork::Mainnet, BitcoinAddressType::P2sh, null, '982a9dacf9e0365a252185cb664fca73a559bc89', '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5'];
+        yield 'exchange cold wallet P2WSH' => ['bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97', BitcoinNetwork::Mainnet, BitcoinAddressType::P2wsh, 0, '4364063fac8829a931a752ecd9049e43425e2cebf83681876c556002bf389b00', 'bc1qgdjqv0av3q56jvd82tkdjpy7gdp9ut8tlqmgrpmv24sq90ecnvqqjwvw97'];
+        yield 'custody P2WSH' => ['bc1q9d4ywgfnd8h43da5tpcxcn6ajv590cg6d3tg6axemvljvt2k76zs50tv4q', BitcoinNetwork::Mainnet, BitcoinAddressType::P2wsh, 0, '2b6a47213369ef58b7b458706c4f5d932857e11a6c568d74d9db3f262d56f685', 'bc1q9d4ywgfnd8h43da5tpcxcn6ajv590cg6d3tg6axemvljvt2k76zs50tv4q'];
+        yield 'documentation P2WPKH' => ['bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', BitcoinNetwork::Mainnet, BitcoinAddressType::P2wpkh, 0, '311564348890e005880a9bc834aaa5884f1b5932', 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'];
+        yield 'exchange hot wallet P2WPKH' => ['bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq', BitcoinNetwork::Mainnet, BitcoinAddressType::P2wpkh, 0, 'e8df018c7e326cc253faac7e46cdc51e68542c42', 'bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdq'];
+        yield 'seized-funds P2WPKH' => ['bc1qazcm763858nkj2dj986etajv6wquslv8uxwczt', BitcoinNetwork::Mainnet, BitcoinAddressType::P2wpkh, 0, 'e8b1bf6a27a1e76929b229f595f64cd381c87d87', 'bc1qazcm763858nkj2dj986etajv6wquslv8uxwczt'];
+        yield 'custody P2WPKH' => ['bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h', BitcoinNetwork::Mainnet, BitcoinAddressType::P2wpkh, 0, 'dc6bf86354105de2fcd9868a2b0376d6731cb92f', 'bc1qm34lsc65zpw79lxes69zkqmk6ee3ewf0j77s3h'];
+        yield 'taproot P2TR' => ['bc1p5d7rjq7g6rdk2yhzks9smlaqtedr4dekq08ge8ztwac72sfr9rusxg3297', BitcoinNetwork::Mainnet, BitcoinAddressType::P2tr, 1, 'a37c3903c8d0db6512e2b40b0dffa05e5a3ab73603ce8c9c4b7771e5412328f9', 'bc1p5d7rjq7g6rdk2yhzks9smlaqtedr4dekq08ge8ztwac72sfr9rusxg3297'];
+    }
+
+    /**
+     * @return iterable<string, array{string, BitcoinNetwork, BitcoinAddressType, ?int, string, string}>
+     */
+    public static function bipFutureWitnessVectors(): iterable
+    {
+        yield 'BIP-350 witness v1, 40-byte program' => ['bc1pw508d6qejxtdg4y5r3zarvary0c5xw7kw508d6qejxtdg4y5r3zarvary0c5xw7kt5nd6y', BitcoinNetwork::Mainnet, BitcoinAddressType::WitnessFuture, 1, '751e76e8199196d454941c45d1b3a323f1433bd6751e76e8199196d454941c45d1b3a323f1433bd6', 'bc1pw508d6qejxtdg4y5r3zarvary0c5xw7kw508d6qejxtdg4y5r3zarvary0c5xw7kt5nd6y'];
+        yield 'BIP-350 witness v16, 2-byte program' => ['BC1SW50QGDZ25J', BitcoinNetwork::Mainnet, BitcoinAddressType::WitnessFuture, 16, '751e', 'bc1sw50qgdz25j'];
+        yield 'BIP-350 witness v2, 16-byte program' => ['bc1zw508d6qejxtdg4y5r3zarvaryvaxxpcs', BitcoinNetwork::Mainnet, BitcoinAddressType::WitnessFuture, 2, '751e76e8199196d454941c45d1b3a323', 'bc1zw508d6qejxtdg4y5r3zarvaryvaxxpcs'];
+        yield 'BIP-350 testnet P2WSH' => ['tb1qqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesrxh6hy', BitcoinNetwork::Testnet, BitcoinAddressType::P2wsh, 0, '000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433', 'tb1qqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesrxh6hy'];
+        yield 'BIP-350 testnet P2TR' => ['tb1pqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesf3hn0c', BitcoinNetwork::Testnet, BitcoinAddressType::P2tr, 1, '000000c4a5cad46221b2a187905e5266362b99d5e91c6ce24d165dab93e86433', 'tb1pqqqqp399et2xygdj5xreqhjjvcmzhxw4aywxecjdzew6hylgvsesf3hn0c'];
+    }
+
     #[DataProvider('validAddresses')]
+    #[DataProvider('wellKnownMainnetAddresses')]
+    #[DataProvider('bipFutureWitnessVectors')]
     public function testParsesValidAddress(string $raw, BitcoinNetwork $network, BitcoinAddressType $type, ?int $version, string $payloadHex, string $canonical): void
     {
         $address = BitcoinAddress::fromString($raw, $network);
@@ -85,6 +118,22 @@ final class BitcoinAddressTest extends TestCase
         yield 'an EVM address' => ['0x751e76e8199196d454941c45d1b3a323f1433bd6', BitcoinNetwork::Mainnet];
         yield 'whitespace only' => ['   ', BitcoinNetwork::Mainnet];
         yield 'empty' => ['', BitcoinNetwork::Mainnet];
+        yield 'BIP-350 invalid human-readable part' => ['tc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vq5zuyut', BitcoinNetwork::Mainnet];
+        yield 'BIP-350 one-byte program on witness v3' => ['bc1rw5uspcuh', BitcoinNetwork::Mainnet];
+        yield 'BIP-350 41-byte program' => ['bc10w508d6qejxtdg4y5r3zarvary0c5xw7kw508d6qejxtdg4y5r3zarvary0c5xw7kw5rljs90', BitcoinNetwork::Mainnet];
+        yield 'BIP-350 more than four padding bits' => ['bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7v07qwwzcrf', BitcoinNetwork::Mainnet];
+        yield 'BIP-350 non-zero padding on testnet' => ['tb1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vpggkg4j', BitcoinNetwork::Testnet];
+        yield 'mainnet P2WSH on testnet' => ['bc1q9d4ywgfnd8h43da5tpcxcn6ajv590cg6d3tg6axemvljvt2k76zs50tv4q', BitcoinNetwork::Testnet];
+        yield 'mainnet P2SH on regtest' => ['34xp4vRoCGJym3xR7yCVPFHoCNxv4Twseo', BitcoinNetwork::Regtest];
+        yield 'testnet P2PKH on mainnet' => ['mipcBbFg9gMiCh81Kj8tqqdgoZub1ZJRfn', BitcoinNetwork::Mainnet];
+        yield 'P2WPKH with one upper-case character' => ['bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdQ', BitcoinNetwork::Mainnet];
+        yield 'P2WPKH with a mistyped last character' => ['bc1qar0srrr7xfkvy5l643lydnw9re59gtzzwf5mdr', BitcoinNetwork::Mainnet];
+        yield 'P2WPKH with an extra character' => ['bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlhb', BitcoinNetwork::Mainnet];
+        yield 'P2PKH with a mistyped last character' => ['12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3T', BitcoinNetwork::Mainnet];
+        yield 'P2SH with a mistyped last character' => ['3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc6', BitcoinNetwork::Mainnet];
+        yield 'payment URI instead of an address' => ['bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', BitcoinNetwork::Mainnet];
+        yield 'address followed by an amount' => ['bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh?amount=0.1', BitcoinNetwork::Mainnet];
+        yield 'TON address' => ['UQAht13a44YMjGClyRbYCFi9sEPaQbfP6RZJhy_2RGv4Wi1D', BitcoinNetwork::Mainnet];
     }
 
     #[DataProvider('invalidAddresses')]
